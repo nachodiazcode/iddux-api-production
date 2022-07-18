@@ -6,12 +6,15 @@ const    mongoose = require('mongoose')
 const  cookieParser = require('cookie-parser') ;
 const       morgan  = require('morgan') ;
 const          cors = require('cors');
-const AWS  = require('aws-sdk')
+const AWS  = require('aws-sdk');
+
+
+require('dotenv').config();
 
 const       session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-const MongoUrlDev = "mongodb://localhost:27017/registrodeproductos";
-const MongoUrlProd = "mongodb+srv://iddyxadmin:<iddyx1234>@cluster0.crv5m9z.mongodb.net/?retryWrites=true&w=majority";
+// const MongoUrlDev = "mongodb://localhost:27017/registrodeproductos";
+const MongoUrlProd = process.env.MONGO_URI;
 
 require("dotenv").config();
 
@@ -48,13 +51,12 @@ log.stream = {
 
 app.use(cors());
 
-
 app.use(session({   
     secret: "esto_es_secreto",
     resave: true,
     saveUninitialized: true,
     store: new MongoStore({
-        url:MongoUrlDev,
+        url:MongoUrlProd,
         autoReconnect: true 
     })
 
@@ -62,7 +64,7 @@ app.use(session({
 
 
 mongoose.Promise = global.Promise ;
-mongoose.connect(MongoUrlDev, {
+mongoose.connect(MongoUrlProd, {
     useUnifiedTopology: true,
     useNewUrlParser: true
 });
