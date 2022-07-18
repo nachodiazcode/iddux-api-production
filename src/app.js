@@ -63,8 +63,7 @@ app.use(session({
 mongoose.Promise = global.Promise ;
 mongoose.connect(MONGO_URL, {
     useUnifiedTopology: true,
-    useNewUrlParser: true,
-    useCreateIndex: true
+    useNewUrlParser: true
 });
 
 mongoose.connection.on('error', (err) => {

@@ -1,12 +1,14 @@
 
+require('dotenv').config()
+
 const ambiente = process.env.NODE_ENV || 'development'
 
 const configuracionBase = {
   jwt: 'esto_es_secreto',
   puerto: 3000,
   s3: {
-    secretAccessKey: 'tb6fMf8qPGRZiDoeD5vrOBu4oUaGabIBepWJVwf3',
-    accessKeyId: 'AKIAVBZRGP25VHYSODW7'
+    accessKeyId: process.env.S3_ACCESS_KEY_ID,
+    secretAccessKey: process.env.S3_SECRET_KEY
   }
 }
   

@@ -8,7 +8,6 @@ const MONGO_URL = 'mongodb://localhost/registrodeproductos'
 mongoose.connect(MONGO_URL, ({
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true,
     useFindAndModify : false
 }))
 

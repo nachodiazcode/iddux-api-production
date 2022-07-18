@@ -17,6 +17,7 @@ const jwtAuthenticate = passport.authenticate('jwt', {session: false})
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use('jwt',authJWT)
+require('dotenv').config()
 
 const fs = require('fs')
 const aws = require('aws-sdk')
@@ -33,8 +34,8 @@ const uploadImageS3 = multer({
         dirname: '/',
         acl: 'public-read',
         bucket: 'registralo',
-        secretAccessKey: 'q0kvS9bF2ZnR0Rkm+7LzI8iElylo1y1qU0wo6IxM',
-        accessKeyId: 'AKIAVBZRGP25SB6GGJWD',
+        accessKeyId: process.env.S3_ACCESS_KEY_ID,
+        secretAccessKey: process.env.S3_SECRET_KEY,
         metadata: function (req, file, cb) {
             console.log(req.body)
             cb(null, Object.assign({}, req.body));

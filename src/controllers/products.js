@@ -2,6 +2,8 @@ const Product = require('./../models/Products')
 const Cart = require('./../models/Cart')
 const User = require('./../models/Users')
 
+require('dotenv').config()
+
 const path = require('path')
 
 const fs = require('fs')
@@ -15,8 +17,8 @@ const { sample } = require('underscore')
 const s3 = new AWS.S3()
 
 AWS.config.update({
-    secretAccessKey: 'q0kvS9bF2ZnR0Rkm+7LzI8iElylo1y1qU0wo6IxM',
-    accessKeyId: 'AKIAVBZRGP25SB6GGJWD'
+    accessKeyId: process.env.S3_ACCESS_KEY_ID,
+    secretAccessKey: process.env.S3_SECRET_KEY
 })
 
 const fileFilter = (req, file, cb) => {
