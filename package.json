@@ -4,7 +4,7 @@
   "description": "backend of registrodeproductos version 1.0.0 by weilaystudio (ignacio díazbackend of registrodeproductos version 1.0.0 by weilaystudio (ignacio díaz))",
   "main": "index.js",
   "engines":{
-    "node":"14.x"
+    "node":"16.x"
   },
   "dependencies": {
     "@hapi/joi": "^15.0.3",
