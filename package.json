@@ -12,7 +12,7 @@
     "connect-mongo": "^3.2.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
+    "dotenv": "^8.6.0",
     "express": "^4.17.1",
     "express-fileupload": "^1.2.0",
     "express-session": "^1.17.1",
@@ -36,10 +36,18 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "pm2 src/index.js",
+    "start": "node src/index.js",
     "dev": "nodemon src/index.js"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nachodiaz/iddyx-backend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nachodiaz/iddyx-backend/issues"
+  },
+  "homepage": "https://github.com/nachodiaz/iddyx-backend#readme"
 }
