@@ -4,9 +4,6 @@ const config = require('./config/index')
 
 const port = config.port ;
 
-async function init() {
-    await app.listen(config.puerto)
-    log.info(`Leasting on port ${port}`)
-}
+app.listen(config.puerto)
 
-init()
+
