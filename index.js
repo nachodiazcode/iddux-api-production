@@ -2,9 +2,11 @@ const app = require('./app')
 const log = require('./utils/logger')
 const config = require('./config/index')
 
+const port = config.port ;
+
 async function init() {
     await app.listen(config.puerto)
-    log.info(`Leasting on port 3000`)
+    log.info(`Leasting on port ${port}`)
 }
 
 init()
