@@ -10,7 +10,8 @@ const AWS  = require('aws-sdk')
 
 const       session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-const MONGO_URL = "mongodb://localhost:27017/registrodeproductos";
+const MongoUrlDev = "mongodb://localhost:27017/registrodeproductos";
+const MongoUrlProd = "mongodb+srv://iddyxadmin:<iddyx1234>@cluster0.crv5m9z.mongodb.net/?retryWrites=true&w=majority";
 
 require("dotenv").config();
 
@@ -53,7 +54,7 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
     store: new MongoStore({
-        url:MONGO_URL,
+        url:MongoUrlDev,
         autoReconnect: true 
     })
 
@@ -61,7 +62,7 @@ app.use(session({
 
 
 mongoose.Promise = global.Promise ;
-mongoose.connect(MONGO_URL, {
+mongoose.connect(MongoUrlDev, {
     useUnifiedTopology: true,
     useNewUrlParser: true
 });

@@ -2,16 +2,14 @@ const mongoose = require('mongoose')
 const       express = require('express');
 const app = express()
 
+const MongoUrlDev = "mongodb://localhost:27017/registrodeproductos";
+const MongoUrlProd = "mongodb+srv://iddyxadmin:<iddyx1234>@cluster0.crv5m9z.mongodb.net/?retryWrites=true&w=majority";
 
-const MONGO_URL = 'mongodb://localhost/registrodeproductos'
-
-mongoose.connect(MONGO_URL, ({
+mongoose.connect(MongoUrlDev, ({
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify : false
 }))
-
-
 
 .then( db => console.log(`Connect to database`) 
 )
