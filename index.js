@@ -1,13 +1,11 @@
 const app = require('./app')
 const log = require('./utils/logger')
 const config = require('./config/index')
-const express = require('express')
+//connect db
 
-require('dotenv').config()
+async function init() {
+    await app.listen(config.puerto)
+    log.info(`Leasting on port 3000`)
+}
 
-const PUERTO = config.port || process.env.PORT ;
-
-
-const api = express();
-
-api.listen(PORT => console.log(`Corriendo en el puerto ${PUERTO}`) )
+init()
