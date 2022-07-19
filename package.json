@@ -39,7 +39,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node index.js",
+    "start": "pm2 index.js",
     "dev": "nodemon index.js"
   },
   "keywords": [],
