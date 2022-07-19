@@ -1,10 +1,11 @@
 const app = require('./app')
 const log = require('./utils/logger')
+const config = require('./config/index')
 const express = require('express')
 
 require('dotenv').config()
 
-const PUERTO = 3000 || process.env.PORT ;
+const PUERTO = config.port || process.env.PORT ;
 
 
 const api = express();
