@@ -15,7 +15,7 @@ require('dotenv').config();
 
 const       session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-const MongoUrlDev = "mongodb://164.92.109.113:26379/registrodeproductos";
+const MongoUrlDev = "mongodb://localhost:27017/registrodeproductos";
 // const MongoUrlProd = "mongodb+srv://iddyxadmin:iddyx1234@cluster0.crv5m9z.mongodb.net/registrodeproductos";
 
 require("dotenv").config();
