@@ -8,12 +8,14 @@ const       morgan  = require('morgan') ;
 const          cors = require('cors');
 const AWS  = require('aws-sdk');
 
+const https = require('https');
+
 
 require('dotenv').config();
 
 const       session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-const MongoUrlDev = "mongodb://159.223.202.236:27017/registrodeproductos";
+const MongoUrlDev = "mongodb://164.92.109.113:27017/registrodeproductos";
 // const MongoUrlProd = "mongodb+srv://iddyxadmin:iddyx1234@cluster0.crv5m9z.mongodb.net/registrodeproductos";
 
 require("dotenv").config();
@@ -87,6 +89,8 @@ app.use((req, res, next) => {
 
     next();
 });
+
+
 
 app.use(require('./routes'))
 
