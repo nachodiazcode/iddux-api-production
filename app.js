@@ -10,7 +10,6 @@ const AWS  = require('aws-sdk');
 
 const https = require('https');
 
-
 require('dotenv').config();
 
 const       session = require('express-session');
