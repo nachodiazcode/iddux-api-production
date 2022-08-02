@@ -40,8 +40,8 @@ app.use(express.urlencoded({ extended: true}))
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(bodyParser.json({ limit: "500mb", extended: true }));
-app.use(bodyParser.urlencoded({ parameterLimit: "100000", limit:"500mb", extended: true }));
+app.use(bodyParser.json({ limit: "10000mb", extended: true }));
+app.use(bodyParser.urlencoded({ parameterLimit: "100000", limit:"1000mb", extended: true }));
 
 // app.use(bodyParser.raw({type: 'image/*'}))
 
