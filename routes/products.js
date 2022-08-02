@@ -13,6 +13,7 @@ const productController = require('./../controllers/products')
 
 const authJWT = require('./../libs/auth')
 
+const          cors = require('cors');
 
 
 const jwtAuthenticate = passport.authenticate('jwt', {session: false})
@@ -29,6 +30,9 @@ const  { v4: uuidv4 } = require('uuid')
 const config = require('./../config')
 const path = require('path')
 const s3 = new aws.S3()
+
+app.use(cors());
+
 
 const uploadImageS3 = multer({
     storage: multerS3({

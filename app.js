@@ -80,7 +80,7 @@ mongoose.connection.on('error', (err) => {
 
 app.use((req, res, next) => {
 
-    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Origin', 'https://api.iddux.com','http://localhost:4200');
     res.header('Access-Control-Allow-Headers', 'x-www-form-urlencoded, Origin, X-Requested-With, Content-Type, Accept, Authorization, *');
   
     if (req.method === 'OPTIONS'){
