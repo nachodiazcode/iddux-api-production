@@ -39,6 +39,10 @@ app.use(express.json({ extended: true}))
 app.use(express.urlencoded({ extended: true}))
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(bodyParser.json({ limit: "10000kb", extended: true }));
+app.use(bodyParser.urlencoded({ limit: "10000kb", extended: true }));
+
 // app.use(bodyParser.raw({type: 'image/*'}))
 
 app.use(morgan('dev'))
