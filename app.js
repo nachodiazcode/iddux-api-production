@@ -29,7 +29,6 @@ let passport = require('passport')
 passport.use(authJWT)
 passport.initialize()
 
-
 app.use((req, res, next) => {
     res.locals.user = req.user;
     next();
@@ -40,7 +39,7 @@ app.use(express.json({ extended: true}))
 app.use(express.urlencoded({ extended: true}))
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(bodyParser.raw({type: 'image/*'}))
+// app.use(bodyParser.raw({type: 'image/*'}))
 
 app.use(morgan('dev'))
 
