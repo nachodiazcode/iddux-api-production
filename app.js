@@ -68,7 +68,7 @@ app.use(session({
 
 
 mongoose.Promise = global.Promise ;
-mongoose.connect(MongoUrlProd, {
+mongoose.connect(process.env.MONGO_URI, {
     useUnifiedTopology: true,
     useNewUrlParser: true
 });
