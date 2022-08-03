@@ -60,7 +60,7 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
     store: new MongoStore({
-        url:MongoUrlDev,
+        url:MongoUrlProd,
         autoReconnect: true 
     })
 
@@ -68,7 +68,7 @@ app.use(session({
 
 
 mongoose.Promise = global.Promise ;
-mongoose.connect(MongoUrlDev, {
+mongoose.connect(MongoUrlProd, {
     useUnifiedTopology: true,
     useNewUrlParser: true
 });
