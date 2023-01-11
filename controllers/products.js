@@ -49,15 +49,9 @@ const uploadProduct = (req, res) => {
     const productSaved = new Product({
         title: body.title,
         description: body.description,
-        details_product: body.details_product,
-        price: body.price,
         category: body.category,
-        currency: body.currency,
-        email: body.email,
         code: body.code,
-        send_dates:body.send_dates,
-        quantity: body.count,
-        stock: body.stock,
+        state:body.state,
         imageURL: req.file.location,
         owner: req.user.username,
     })

@@ -8,6 +8,7 @@ const log = require('./../utils/logger')
 const User = require('./../models/Users')
 
 const config = require('./../config')
+var session = require('express-session')
 
 const LocalStorage = require('node-localstorage').LocalStorage,
 localStorage = new LocalStorage('./scratch')
@@ -44,6 +45,7 @@ UserRouter.post('/user/signup' , (req, res) => {
 
             return bcrypt.hash(newUser.password, 10)
         })
+
         .catch(err => {
             console.log(err)
         })
@@ -74,14 +76,12 @@ UserRouter.post('/user/signin', async (req, res) => {
     
       if (!userRegistered) {
         log.info(`Usuario [${userNoAuthenticate.username}] no existe. No pudo ser autenticado`)
-        res.json("Credenciales incorrectas. Asegúrate que el username y contraseña sean correctas")
       }
     
       try {
         correctPassword = await bcrypt.compare(userNoAuthenticate.password, userRegistered.password)
       } catch (err) {
         log.error(`Error ocurrió al tratar de verificar si la contraseña es correcta`, err)
-        return res.json('Error ocurrió durante el proceso de login')
       }
     
       if (correctPassword) {
@@ -89,31 +89,31 @@ UserRouter.post('/user/signin', async (req, res) => {
         // GENERAR Y ENVIAR TOKEN
     
         const expiresIn = 24 * 60 * 60
-        const userId = req.body.username
-    
+        const username = req.body.username
+        
         const token = jwt.sign({
           id: userRegistered.id,
           email: userRegistered.email
         }, config.jwt.secret, {expiresIn: expiresIn})
 
-        console.log(userId)
+        console.log(this.token, username)
+
+        console.log(userRegistered)
         
-        res.status(200).send({user: userId, email: userRegistered.email, token: token, })
-    
-        res.json({token:token, user: userId, dataUser: userRegistered})
-        log.info(`Usuario ${userNoAuthenticate.username} completo autenticación exitosamente`)
+        log.info(`Usuario ${userNoAuthenticate.username} completo autenticación exitosamente`);
+        console.log('usuario logueado exitosamente');
+        res.json({token:token, username: username, dataUser: userRegistered})
     
       } else {
         log.info(`Usuario ${userNoAuthenticate.username} no completo autenticación. Contraseña Incorrecta`);
-        res.json('Credenciales incorrectas. Asegúrate que el nombre de usuario y contraseña sean correctas')
+        console.log('hubo un error')
       }
 })
 
 UserRouter.get('/user/profile', jwtAuthenticate , (req, res) => {
-    let userAuthenticate = req.body
+
     
     let user = `${req.user.username}`
-    let email = `${req.body.email}`
 
 
     res.status(200).send(`Hola ${user} Bienvenido a iddyx `)

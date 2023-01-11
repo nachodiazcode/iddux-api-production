@@ -12,14 +12,16 @@ const https = require('https');
 
 require('dotenv').config();
 
-const       session = require('express-session');
+var session = require('express-session')
+
 const MongoStore = require('connect-mongo')(session);
-// const MongoUrlDev = "mongodb://localhost:27017/registrodeproductos";
-const MongoUrlProd = process.env.MONGO_URI;
+const MongoUrlDev = "mongodb://localhost:27017/registrodeproductos";
+// const MongoUrlProd = process.env.MONGO_URI;
 
 require("dotenv").config();
 
 const app = express()
+
 
 //Archivos
 let passport = require('passport') 
@@ -34,14 +36,18 @@ app.use((req, res, next) => {
     next();
 })
 
+
+
 app.use(cookieParser())
 app.use(express.json({ extended: true}))
 app.use(express.urlencoded({ extended: true}))
 app.use(passport.initialize());
-app.use(passport.session());
 
 app.use(bodyParser.json({ limit: "10000mb", extended: true }));
 app.use(bodyParser.urlencoded({ parameterLimit: "100000", limit:"1000mb", extended: true }));
+
+
+
 
 // app.use(bodyParser.raw({type: 'image/*'}))
 
@@ -60,7 +66,7 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
     store: new MongoStore({
-        url:MongoUrlProd,
+        url:MongoUrlDev,
         autoReconnect: true 
     })
 
@@ -68,7 +74,7 @@ app.use(session({
 
 
 mongoose.Promise = global.Promise ;
-mongoose.connect(process.env.MONGO_URI, {
+mongoose.connect(/*process.env.MONGO_URI*/ 'mongodb://localhost:27017/registrodeproductos', {
     useUnifiedTopology: true,
     useNewUrlParser: true
 });
