@@ -8,7 +8,6 @@ const log = require('./../utils/logger')
 const User = require('./../models/Users')
 
 const config = require('./../config')
-var session = require('express-session')
 
 const LocalStorage = require('node-localstorage').LocalStorage,
 localStorage = new LocalStorage('./scratch')
@@ -75,12 +74,14 @@ UserRouter.post('/user/signin', async (req, res) => {
     
       if (!userRegistered) {
         log.info(`Usuario [${userNoAuthenticate.username}] no existe. No pudo ser autenticado`)
+        res.json("Credenciales incorrectas. Asegúrate que el username y contraseña sean correctas")
       }
     
       try {
         correctPassword = await bcrypt.compare(userNoAuthenticate.password, userRegistered.password)
       } catch (err) {
         log.error(`Error ocurrió al tratar de verificar si la contraseña es correcta`, err)
+        return res.json('Error ocurrió durante el proceso de login')
       }
     
       if (correctPassword) {
@@ -97,11 +98,14 @@ UserRouter.post('/user/signin', async (req, res) => {
 
         console.log(userId)
         
+        res.status(200).send({user: userId, email: userRegistered.email, token: token, })
     
+        res.json({token:token, user: userId, dataUser: userRegistered})
         log.info(`Usuario ${userNoAuthenticate.username} completo autenticación exitosamente`)
     
       } else {
         log.info(`Usuario ${userNoAuthenticate.username} no completo autenticación. Contraseña Incorrecta`);
+        res.json('Credenciales incorrectas. Asegúrate que el nombre de usuario y contraseña sean correctas')
       }
 })
 

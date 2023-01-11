@@ -12,8 +12,7 @@ const https = require('https');
 
 require('dotenv').config();
 
-var session = require('express-session')
-
+const       session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 // const MongoUrlDev = "mongodb://localhost:27017/registrodeproductos";
 const MongoUrlProd = process.env.MONGO_URI;
@@ -21,7 +20,6 @@ const MongoUrlProd = process.env.MONGO_URI;
 require("dotenv").config();
 
 const app = express()
-
 
 //Archivos
 let passport = require('passport') 
@@ -36,18 +34,14 @@ app.use((req, res, next) => {
     next();
 })
 
-
-
 app.use(cookieParser())
 app.use(express.json({ extended: true}))
 app.use(express.urlencoded({ extended: true}))
 app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(bodyParser.json({ limit: "10000mb", extended: true }));
 app.use(bodyParser.urlencoded({ parameterLimit: "100000", limit:"1000mb", extended: true }));
-
-
-
 
 // app.use(bodyParser.raw({type: 'image/*'}))
 

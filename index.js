@@ -1,9 +1,6 @@
 const app = require('./app')
 const log = require('./utils/logger')
 const config = require('./config/index')
-
-var session = require('express-session')
-
 //connect db
 const https = require('https');
 
