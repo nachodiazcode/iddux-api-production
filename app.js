@@ -15,8 +15,8 @@ require('dotenv').config();
 var session = require('express-session')
 
 const MongoStore = require('connect-mongo')(session);
-const MongoUrlDev = "mongodb://localhost:27017/registrodeproductos";
-// const MongoUrlProd = process.env.MONGO_URI;
+// const MongoUrlDev = "mongodb://localhost:27017/registrodeproductos";
+const MongoUrlProd = process.env.MONGO_URI;
 
 require("dotenv").config();
 
@@ -60,7 +60,7 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
     store: new MongoStore({
-        url:MongoUrlDev,
+        url:MongoUrlProd,
         autoReconnect: true 
     })
 
@@ -68,7 +68,7 @@ app.use(session({
 
 
 mongoose.Promise = global.Promise ;
-mongoose.connect(/*process.env.MONGO_URI*/ 'mongodb://localhost:27017/registrodeproductos', {
+mongoose.connect(process.env.MONGO_URI /* 'mongodb://localhost:27017/registrodeproductos'*/, {
     useUnifiedTopology: true,
     useNewUrlParser: true
 });
