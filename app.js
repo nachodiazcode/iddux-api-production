@@ -22,7 +22,6 @@ require("dotenv").config();
 
 const app = express()
 
-
 //Archivos
 let passport = require('passport') 
      authJWT = require('./libs/auth')
@@ -36,8 +35,6 @@ app.use((req, res, next) => {
     next();
 })
 
-
-
 app.use(cookieParser())
 app.use(express.json({ extended: true}))
 app.use(express.urlencoded({ extended: true}))
@@ -45,9 +42,6 @@ app.use(passport.initialize());
 
 app.use(bodyParser.json({ limit: "10000mb", extended: true }));
 app.use(bodyParser.urlencoded({ parameterLimit: "100000", limit:"1000mb", extended: true }));
-
-
-
 
 // app.use(bodyParser.raw({type: 'image/*'}))
 
