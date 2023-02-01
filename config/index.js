@@ -5,7 +5,7 @@ const ambiente = process.env.NODE_ENV || 'development'
 
 const configuracionBase = {
   jwt: 'esto_es_secreto',
-  puerto: process.env.PUERTO,
+  puerto: 8080,
   s3: {
     accessKeyId: process.env.S3_ACCESS_KEY_ID,
     secretAccessKey: process.env.S3_SECRET_KEY
