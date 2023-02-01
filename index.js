@@ -9,7 +9,7 @@ const https = require('https');
 
 async function init() {
     await app.listen(config.puerto)
-    log.info(`Leasting on port 3000`)
+    log.info(`Leasting on port 80`)
 }
 
 init()
