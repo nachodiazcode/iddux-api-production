@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "backend of registrodeproductos version 1.0.0 by weilaystudio (ignacio díazbackend of registrodeproductos version 1.0.0 by weilaystudio (ignacio díaz))",
+  "description": "backend of registrodeproductos version 1.0.0 by weilaystudio (ignacio díazbackend of registrodeproductos version 1.0.0 by iduxulab (ignacio díaz))",
   "main": "index.js",
   "engines": {
     "node": "14.x"
@@ -42,7 +42,7 @@
     "winston": "^3.3.3"
   },
   "scripts": {
-    "start": "pm2 index.js",
+    "start": "pm2 app.js",
     "dev": "nodemon index.js"
   },
   "keywords": [],
