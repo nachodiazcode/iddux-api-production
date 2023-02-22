@@ -15,8 +15,8 @@ require('dotenv').config();
 var session = require('express-session')
 
 const MongoStore = require('connect-mongo')(session);
-// const MongoUrlDev = "mongodb://localhost:27017/registrodeproductos";
-const MongoUrlProd = process.env.MONGO_URI;
+ const MongoUrlDev = "mongodb://localhost:27017/registrodeproductos";
+// const MongoUrlProd = process.env.MONGO_URI;
 
 require("dotenv").config();
 
@@ -42,8 +42,7 @@ app.use(passport.initialize());
 
 app.use(bodyParser.json({ limit: "10000mb", extended: true }));
 app.use(bodyParser.urlencoded({ parameterLimit: "100000", limit:"1000mb", extended: true }));
-
-// app.use(bodyParser.raw({type: 'image/*'}))
+ app.use(bodyParser.raw({type: 'image/*'}))
 
 app.use(morgan('dev'))
 
@@ -60,15 +59,15 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
     store: new MongoStore({
-        url:MongoUrlProd,
+        url:MongoUrlDev,
         autoReconnect: true 
     })
 
 }));
 
-
+ /*process.env.MONGO_URI */ 
 mongoose.Promise = global.Promise ;
-mongoose.connect(process.env.MONGO_URI /* 'mongodb://localhost:27017/registrodeproductos'*/, {
+mongoose.connect( 'mongodb://localhost:27017/registrodeproductos', {
     useUnifiedTopology: true,
     useNewUrlParser: true
 });

@@ -22,7 +22,7 @@ AWS.config.update({
 })
 
 const fileFilter = (req, file, cb) => {
-    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/gif') {
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/gif') {
         cb(null, true)
     } else {
         cb(new Error ('Tipo de Archivo Invalido'), false)
