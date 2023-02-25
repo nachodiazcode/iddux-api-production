@@ -53,11 +53,6 @@ const uploadProduct = (req, res) => {
         code: body.code,
         state:body.state,
         imageURL: req.file.location,
-        email:body.email,
-        stock:body.stock,
-        quantity:body.quantity,
-        currency:body.currency,
-        price:body.price,
         owner: req.user.username,
     })
 

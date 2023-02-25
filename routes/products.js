@@ -56,7 +56,6 @@ const uploadImageS3 = multer({
 //ruta para obtener productos
 productRouter.get('/products' , productController.listProducts)
 productRouter.get('/product/:id', productController.listProductById)
-productRouter.put('/product/:id', productController.addToCart)
 productRouter.post('/products/upload', [jwtAuthenticate], uploadImageS3.single('imageURL'),
 productController.uploadProduct )
 
