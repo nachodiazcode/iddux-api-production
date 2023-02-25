@@ -1,5 +1,4 @@
 const Product = require('./../models/Products')
-const Cart = require('./../models/Cart')
 const User = require('./../models/Users')
 
 require('dotenv').config()
@@ -61,24 +60,10 @@ const uploadProduct = (req, res) => {
     console.log(productSaved)
 }
 
-const addToCart = async (req, res) => {
-
-    const _id = req.params.id;
-
-    const productSaved = new Cart({
-        product: _id,
-        title: req.body.title,
-    }) 
-
-    console.log(productSaved)
-    console.log(req.body)
-    console.log('Producto Guardado')
-
-}
 
 module.exports = {
     listProducts,
     listProductById,
     uploadProduct,
-    addToCart
+
 }
