@@ -19,23 +19,8 @@ const productSchema = new Schema({
     imageURL: {
         type: String
     },
-    email:{
-        type: String
-    },
     state:{
         type: String
-    },
-    stock:{
-        type: Number
-    },
-    quantity:{
-        type : Number
-    },
-    currency:{
-        type: String
-    },
-    price:{
-        type: Number
     },
     owner : {
         type: String
