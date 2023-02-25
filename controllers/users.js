@@ -1,3 +1,6 @@
+'use strict';
+
+
 const express = require('express')
 
 const log = require('./../utils/logger')

@@ -1,5 +1,5 @@
 const express =  require('express')
-const bcrypt = require('bcrypt-nodejs')
+const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const _ = require('underscore')
 const userController = require('./../controllers/users')
@@ -63,23 +63,27 @@ UserRouter.post('/user/signup' , (req, res) => {
 
 UserRouter.post('/user/signin', async (req, res) => {
 
-    let userNoAuthenticate = req.body
+    let params = req.body
+
+    var email = params.email;
+	  var password = params.password;
+
     let userRegistered
     let correctPassword
 
     try {
-        userRegistered = await userController.getUser({username: userNoAuthenticate.username})
+        userRegistered = await userController.getUser({username: params.username})
       } catch (err) {
-        log.info(`Error ocurrio al tratar de determinar si el usuario ${userNoAuthenticate.username} ya existe`, err)
+        log.info(`Error ocurrio al tratar de determinar si el usuario ${params.username} ya existe`, err)
         res.json("Error ocurrió durante el proceso de login")
       }
     
       if (!userRegistered) {
-        log.info(`Usuario [${userNoAuthenticate.username}] no existe. No pudo ser autenticado`)
+        log.info(`Usuario [${params.username}] no existe. No pudo ser autenticado`)
       }
     
       try {
-        correctPassword = await bcrypt.compare(userNoAuthenticate.password, userRegistered.password)
+        correctPassword = await bcrypt.compare(params.password, userRegistered.password)
       } catch (err) {
         log.error(`Error ocurrió al tratar de verificar si la contraseña es correcta`, err)
       }
@@ -100,12 +104,12 @@ UserRouter.post('/user/signin', async (req, res) => {
 
         console.log(userRegistered)
         
-        log.info(`Usuario ${userNoAuthenticate.username} completo autenticación exitosamente`);
+        log.info(`Usuario ${params.username} completo autenticación exitosamente`);
         console.log('usuario logueado exitosamente');
         res.json({token:token, username: username, dataUser: userRegistered})
     
       } else {
-        log.info(`Usuario ${userNoAuthenticate.username} no completo autenticación. Contraseña Incorrecta`);
+        log.info(`Usuario ${params.username} no completo autenticación. Contraseña Incorrecta`);
         console.log('hubo un error')
       }
 })
