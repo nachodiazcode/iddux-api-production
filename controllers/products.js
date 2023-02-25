@@ -12,6 +12,7 @@ const multerS3 = require('multer-s3')
 const  { v4: uuidv4 } = require('uuid')
 const config = require('./../config')
 const { sample } = require('underscore')
+const { description } = require('@hapi/joi/lib/types/alternatives')
 
 const s3 = new AWS.S3()
 
@@ -28,14 +29,14 @@ const fileFilter = (req, file, cb) => {
     }
 }
 
-const listProductById = async (req, res) => {
+const getProduct = async (req, res) => {
    const {id} = req.params;
    const product = await Product.findById(id);
 
    return res.json(product)
 }
 
-const listProducts = (req, res) => {
+const getProducts = (req, res) => {
     Product.find({}).exec((err, data) => {
         return res.json(data)
     })
@@ -43,27 +44,36 @@ const listProducts = (req, res) => {
 
 const uploadProduct = (req, res) => {
 
-    let body = req.body
- 
-    const productSaved = new Product({
-        title: body.title,
-        description: body.description,
-        category: body.category,
-        code: body.code,
-        state:body.state,
-        imageURL: req.file.location,
-        owner: req.user.username,
-    })
+    var product = new Product();
+    var params = req.body ;
 
-    productSaved.save()
+    product.title = params.title;
+    product.description = params.description;
+    product.category = params.category;
+    product.code = params.code;
+    productstate =params.state;
+    imageURL = req.file.location;
+    owner =req.user.username;
 
-    console.log(productSaved)
+    product.save((err, product) => {
+
+        if(err){
+            res.status(500).send({message:"Error al guardar el producto"})
+        }else{
+            if(!product){
+                res.status(404).send({message:"El producto no ha sido guardado"})
+            }else{
+                res.status(201).send({product});
+                console.log(product)
+            }
+        }
+    });
 }
 
 
 module.exports = {
-    listProducts,
-    listProductById,
+    getProducts,
+    getProduct,
     uploadProduct,
 
 }
