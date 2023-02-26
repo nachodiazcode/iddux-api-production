@@ -12,7 +12,6 @@ const multerS3 = require('multer-s3')
 const  { v4: uuidv4 } = require('uuid')
 const config = require('./../config')
 const { sample } = require('underscore')
-const { description } = require('@hapi/joi/lib/types/alternatives')
 
 const s3 = new AWS.S3()
 
@@ -29,14 +28,14 @@ const fileFilter = (req, file, cb) => {
     }
 }
 
-const getProduct = async (req, res) => {
+const listProductById = async (req, res) => {
    const {id} = req.params;
    const product = await Product.findById(id);
 
    return res.json(product)
 }
 
-const getProducts = (req, res) => {
+const listProducts = (req, res) => {
     Product.find({}).exec((err, data) => {
         return res.json(data)
     })
@@ -44,36 +43,31 @@ const getProducts = (req, res) => {
 
 const uploadProduct = (req, res) => {
 
-    var product = new Product();
-    var params = req.body ;
+    let body = req.body
+ 
+    const productSaved = new Product({
+        title: body.title,
+        description: body.description,
+        category: body.category,
+        code: body.code,
+        state:body.state,
+        imageURL: req.file.location,
+        email:body.email,
+        stock:body.stock,
+        quantity:body.quantity,
+        currency:body.currency,
+        price:body.price,
+        owner: req.user.username,
+    })
 
-    product.title = params.title;
-    product.description = params.description;
-    product.category = params.category;
-    product.code = params.code;
-    productstate =params.state;
-    imageURL = req.file.location;
-    owner =req.user.username;
+    productSaved.save()
 
-    product.save((err, product) => {
-
-        if(err){
-            res.status(500).send({message:"Error al guardar el producto"})
-        }else{
-            if(!product){
-                res.status(404).send({message:"El producto no ha sido guardado"})
-            }else{
-                res.status(201).send({product});
-                console.log(product)
-            }
-        }
-    });
+    console.log(productSaved)
 }
 
 
 module.exports = {
-    getProducts,
-    getProduct,
-    uploadProduct,
-
+    listProducts,
+    listProductById,
+    uploadProduct
 }
