@@ -14,6 +14,7 @@ const authJWT = require('./../libs/auth')
 
 const cors = require('cors');
 
+
 const jwtAuthenticate = passport.authenticate('jwt', {session: false})
 app.use(passport.initialize());
 app.use(passport.session());

@@ -1,17 +1,20 @@
+'use strict'
+
+const path = require('path')
+const fs = require('fs')
+
 const Product = require('./../models/Products')
 const User = require('./../models/Users')
 
 require('dotenv').config()
 
-const path = require('path')
-
-const fs = require('fs')
 const AWS = require('aws-sdk')
 const multer = require('multer')
 const multerS3 = require('multer-s3')
 const  { v4: uuidv4 } = require('uuid')
 const config = require('./../config')
 const { sample } = require('underscore')
+
 
 const s3 = new AWS.S3()
 
@@ -51,12 +54,7 @@ const uploadProduct = (req, res) => {
         category: body.category,
         code: body.code,
         state:body.state,
-        imageURL: req.file.location,
-        email:body.email,
-        stock:body.stock,
-        quantity:body.quantity,
-        currency:body.currency,
-        price:body.price,
+        imageURL: req.file.location, 
         owner: req.user.username,
     })
 
