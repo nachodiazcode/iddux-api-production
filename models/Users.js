@@ -22,5 +22,4 @@ userSchema.methods.comparePassword = function (password) {
    return bcrypt.compareSync(password, this.password)
 }
 
-
 module.exports = model('User', userSchema)

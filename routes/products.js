@@ -37,7 +37,7 @@ const uploadImageS3 = multer({
         s3: s3,
         dirname: '/',
         acl: 'public-read',
-        bucket: 'images-iddyx',
+        bucket: 'iddux-images',
         accessKeyId: process.env.S3_ACCESS_KEY_ID,
         secretAccessKey: process.env.S3_SECRET_KEY,
         metadata: function (req, file, cb) {
@@ -55,9 +55,11 @@ const uploadImageS3 = multer({
 })
 
 //ruta para obtener productos
+
 productRouter.get('/products' , productController.listProducts)
 productRouter.get('/product/:id', productController.listProductById)
-productRouter.post('/products/upload', [jwtAuthenticate], uploadImageS3.single('imageURL'),
-productController.uploadProduct )
+productRouter.post('/products/upload', [jwtAuthenticate], uploadImageS3.single('imageURL'),productController.uploadProduct )
+productRouter.put('/product/:id', [jwtAuthenticate], uploadImageS3.single('imageURL'), productController.updateProduct)
+productRouter.delete('/product/:id', productController.deleteProduct)
 
 module.exports = productRouter ;

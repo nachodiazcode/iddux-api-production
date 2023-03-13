@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken')
 const _ = require('underscore')
 const userController = require('./../controllers/users')
 
+const nodemailer = require('nodemailer');
+
 const log = require('./../utils/logger')
 const User = require('./../models/Users')
 
@@ -29,37 +31,58 @@ function transformBodyToLowerCase(req, res, next) {
     next()
 }
 
-UserRouter.post('/user/signup' , (req, res) => {
+UserRouter.post('/user/signup', async (req, res) => {
 
-    let newUser = req.body
-    let token =  jwt.sign({_id: newUser._id}, config.jwt.secret)
+  try {
+    const newUser = req.body;
 
-    userController.userExists(newUser.username, newUser.email) 
-        .then(userExists => {
-            if (userExists) {
-               return  res.status(409).json("El correo ya esta asociado a una cuenta")
-               res.json({token:token})
-                log.warn(`Email [${newUser.email}] o username [${newUser.username}] ya se encuentran en la base de datos`)
-                
-            } 
+    const userExists = await userController.userExists(newUser.username, newUser.email);
 
-            return bcrypt.hash(newUser.password, 10)
-        })
+    if (userExists) {
+      return res.status(409).json("El correo ya esta asociado a una cuenta");
+    }
 
-        .catch(err => {
-            console.log(err)
-        })
-        .then((hash) => {
-            return userController.createUser(newUser, hash)
-                .then(newUser => {
-                    return res.status(201).json({token: token}) ,                   
-                    log.info(`Usuario ${newUser.username} fue creado Exitósamente`)
-                })
-        })
-        .catch(err => {
-            console.log(err)
-        })    
-})
+    const hash = await bcrypt.hash(newUser.password, 10);
+
+    const token = jwt.sign({ _id: newUser._id }, config.jwt.secret);
+
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 587,
+      secure: false,
+      requireTLS: true,
+      auth: {
+        user: 'ignaciosergiodiaz@gmail.com',
+        pass: 'dlfopehxhpuozfwu'
+      }
+    });
+
+    const mailOptions = {
+      from: 'ignaciosergiodiaz@gmail.com',
+      to: newUser.email,
+      subject: 'Verificación de cuenta',
+      html: `<p>Hola ${newUser.username},</p><p>Gracias por registrarte. Por favor, haz clic 
+      en el siguiente enlace para verificar tu cuenta:</p><p><a href="${config.appUrl}/verify/${token}">${config.appUrl}/verify/${token}</a></p><p>Si no has 
+      solicitado una cuenta en nuestro sitio, por favor ignora este mensaje.</p>`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json('Error al enviar el correo de verificación');
+      } else {
+        userController.createUser(newUser, hash).then((newUser) => {
+          console.log(`Usuario ${newUser.username} fue creado exitósamente`);
+          return res.status(201).json({ token: token });
+        });
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json('Error al crear el usuario');
+  }
+});
+
 
 UserRouter.post('/user/signin', async (req, res) => {
 
@@ -114,13 +137,12 @@ UserRouter.post('/user/signin', async (req, res) => {
       }
 })
 
+
 UserRouter.get('/user/profile', jwtAuthenticate , (req, res) => {
 
-    
     let user = `${req.user.username}`
-
-
     res.status(200).send(`Hola ${user} Bienvenido a iddyx `)
+
 })
 
 UserRouter.get('/users/logout', (req, res) => {
@@ -134,5 +156,33 @@ UserRouter.get('/users/logout', (req, res) => {
 
     log.info(`${userAuthenticate.username} ha salido de la aplicación`)
 });
+
+UserRouter.delete('/user/:userId', async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const deletedUser = await userController.deleteUser(userId);
+    res.json({ message: `Usuario ${deletedUser._id} eliminado correctamente` });
+  } catch (error) {
+    res.status(500).json({ error: `Error al eliminar usuario: ${error.message}` });
+  }
+});
+
+UserRouter.put('/user/:userId', (req, res) => {
+  const { userId } = req.params;
+  const { username, password } = req.body;
+
+  try {
+    const updatedUser = userController.updateUser(userId, username, password);
+    return updatedUser.then(updatedUser => {
+      return res.json({ message: 'Usuario actualizado', user: updatedUser });
+    }).catch(error => {
+      return res.status(500).json({ error: error.message });
+    });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
 
 module.exports = UserRouter

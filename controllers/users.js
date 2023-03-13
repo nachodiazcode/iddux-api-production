@@ -1,10 +1,7 @@
 'use strict';
 
-
-const express = require('express')
-
-const log = require('./../utils/logger')
 const User = require('./../models/Users')
+const bcrypt = require('bcrypt')
 
 function getUser ({
     username: username,
@@ -35,8 +32,46 @@ function userExists(username, email) {
     })
 }
 
+function deleteUser(userId) {
+    return User.findByIdAndDelete(userId)
+      .then((deletedUser) => {
+        if (!deletedUser) {
+          throw new Error('No se encontró el usuario a eliminar');
+        }
+        return deletedUser;
+      })
+      .catch((error) => {
+        throw new Error(`Error al eliminar usuario: ${error.message}`);
+      });
+}
+
+function updateUser(userId, username, password) {
+    if (password && password.length >= 8) {
+      return bcrypt.hash(password, 10)
+        .then(hashedPassword => {
+          return User.findByIdAndUpdate(userId, { username: username, password: hashedPassword }, { new: true })
+            .then(updatedUser => {
+              if (!updatedUser) {
+                throw new Error('No se encontró el usuario a actualizar');
+              }
+              return updatedUser;
+            })
+            .catch(error => {
+              throw new Error(`Error al actualizar el usuario: ${error.message}`);
+            });
+        });
+    } else {
+      throw new Error('La nueva contraseña debe tener al menos 8 caracteres');
+    }
+  }
+
+
+
 module.exports = {
+    updateUser,
     getUser,
     createUser,
-    userExists
+    userExists,
+    deleteUser
+    
 }

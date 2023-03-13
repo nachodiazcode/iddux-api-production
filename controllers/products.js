@@ -45,27 +45,69 @@ const listProducts = (req, res) => {
 }
 
 const uploadProduct = (req, res) => {
+  let body = req.body;
 
-    let body = req.body
- 
-    const productSaved = new Product({
-        title: body.title,
-        description: body.description,
-        category: body.category,
-        code: body.code,
-        state:body.state,
-        imageURL: req.file.location, 
-        owner: req.user.username,
-    })
+  const productSaved = new Product({
+    title: body.title,
+    description: body.description,
+    category: body.category,
+    code: body.code,
+    state: body.state,
+    imageURL: req.file.location,
+    owner: req.user.username,
+  });
 
-    productSaved.save()
+  productSaved.save((err, product) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
 
-    console.log(productSaved)
-}
+    res.send(product);
+    console.log(product);
+  });
+};
+
+
+const updateProduct = async (req, res) => {
+    const productId = req.params.id
+    const { title, description, category, code, state } = req.body
+    const imageURL = req.file ? req.file.location : req.body.imageURL
+  
+    try {
+      const updatedProduct = await Product.findByIdAndUpdate(
+        productId,
+        { title, description, category, code, state, imageURL },
+        { new: true }
+      )
+  
+      res.json(updatedProduct)
+    } catch (err) {
+      console.error(err)
+      res.status(500).json({ message: 'Error actualizando producto' })
+    }
+  }
+
+const deleteProduct = async (req, res) => {
+    const { id } = req.params;
+  
+    try {
+      const product = await Product.findByIdAndDelete(id);
+      if (!product) {
+        return res.status(404).json({ error: 'Producto no encontrado' });
+      }
+  
+      res.json({ message: 'Producto eliminado exitosamente' });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  };
 
 
 module.exports = {
     listProducts,
     listProductById,
-    uploadProduct
+    uploadProduct,
+    updateProduct,
+    deleteProduct
 }
