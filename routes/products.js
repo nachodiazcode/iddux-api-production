@@ -7,15 +7,12 @@ const productRouter = express.Router()
 const log = require('./../utils/logger')
 const Product = require('./../models/Products')
 const {validateProducts} = require('./../validation/products')
-
 const productController = require('./../controllers/products')
-
 const authJWT = require('./../libs/auth')
-
 const cors = require('cors');
 
-
 const jwtAuthenticate = passport.authenticate('jwt', {session: false})
+
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use('jwt',authJWT)
@@ -54,11 +51,9 @@ const uploadImageS3 = multer({
     })
 })
 
-//ruta para obtener productos
-
 productRouter.get('/products' , productController.listProducts)
 productRouter.get('/product/:id', productController.listProductById)
-productRouter.post('/products/upload', [jwtAuthenticate], uploadImageS3.single('imageURL'),productController.uploadProduct )
+productRouter.post('/products/upload', [jwtAuthenticate], uploadImageS3.single('imageURL'),productController.uploadProduct)
 productRouter.put('/product/:id', [jwtAuthenticate], uploadImageS3.single('imageURL'), productController.updateProduct)
 productRouter.delete('/product/:id', productController.deleteProduct)
 

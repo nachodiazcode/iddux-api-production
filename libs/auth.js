@@ -1,12 +1,10 @@
 
 const express =  require('express')
 const app = express()
-
 const passportJWT = require('passport-jwt')
 const passport = require('passport')
 const config = require('./../config')
 const _ = require('underscore')
-
 const userController = require('./../controllers/users')
 const log = require('./../utils/logger')
 
@@ -21,7 +19,6 @@ passport.deserializeUser((id, done) => {
     User.findById(id,(err, user)=>{
         done(err, user);
     })
-    
 })
 
 let jwtOptions = {

@@ -15,7 +15,6 @@ const  { v4: uuidv4 } = require('uuid')
 const config = require('./../config')
 const { sample } = require('underscore')
 
-
 const s3 = new AWS.S3()
 
 AWS.config.update({
@@ -86,7 +85,7 @@ const updateProduct = async (req, res) => {
       console.error(err)
       res.status(500).json({ message: 'Error actualizando producto' })
     }
-  }
+}
 
 const deleteProduct = async (req, res) => {
     const { id } = req.params;
