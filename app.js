@@ -12,6 +12,8 @@ const https = require('https');
 
 require('dotenv').config();
 
+const path = require('path');
+
 var session = require('express-session')
 
 const MongoStore = require('connect-mongo')(session);
@@ -98,6 +100,7 @@ app.use((req, res, next) => {
 
 
 app.use('/', express.static('client', {redirect:false}));
+
 app.use(require('./routes'))
 app.get('*', function(req,res,next){
     res.sendFile(path.resolve('client/index.html'));
