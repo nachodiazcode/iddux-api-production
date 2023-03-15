@@ -15,9 +15,11 @@ require('dotenv').config();
 var session = require('express-session')
 
 const MongoStore = require('connect-mongo')(session);
-const MongoUrlDev = "mongodb://localhost:27017/registrodeproductos";
 
-// const MongoUrlProd = process.env.MONGO_URI;
+// const MongoUrlDev = "mongodb://localhost:27017/registrodeproductos";
+
+//conectamos base de datos mongodb a producción
+const MongoUrlProd = process.env.MONGO_URI;
 
 require("dotenv").config();
 
@@ -69,7 +71,7 @@ app.use(session({
 /*process.env.MONGO_URI */ 
 
 mongoose.Promise = global.Promise ;
-mongoose.connect( 'mongodb://localhost:27017/registrodeproductos', {
+mongoose.connect( MongoUrlProd, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false // Agregar esta línea para deshabilitar findAndModify
