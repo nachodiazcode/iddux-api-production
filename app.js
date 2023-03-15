@@ -95,7 +95,10 @@ app.use((req, res, next) => {
 });
 
 
-
+app.use('/', express.static('client', {redirect:false}));
 app.use(require('./routes'))
+app.get('*', function(req,res,next){
+    res.sendFile(path.resolve('client/index.html'));
+})
 
 module.exports = app
