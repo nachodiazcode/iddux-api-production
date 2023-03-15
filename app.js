@@ -62,7 +62,7 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
     store: new MongoStore({
-        url:mongoUrlDev,
+        url:mongoUrlProd,
         autoReconnect: true 
     })
 
