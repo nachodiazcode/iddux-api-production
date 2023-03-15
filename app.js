@@ -70,8 +70,9 @@ app.use(session({
 
 mongoose.Promise = global.Promise ;
 mongoose.connect( 'mongodb://localhost:27017/registrodeproductos', {
+    useNewUrlParser: true,
     useUnifiedTopology: true,
-    useNewUrlParser: true
+    useFindAndModify: false // Agregar esta línea para deshabilitar findAndModify
 });
 
 mongoose.connection.on('error', (err) => {

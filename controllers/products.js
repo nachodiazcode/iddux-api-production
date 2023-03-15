@@ -43,6 +43,7 @@ const listProducts = (req, res) => {
     })
 }
 
+
 const uploadProduct = (req, res) => {
   let body = req.body;
 
