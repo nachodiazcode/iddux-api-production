@@ -19,7 +19,7 @@ const MongoStore = require('connect-mongo')(session);
 // const MongoUrlDev = "mongodb://localhost:27017/registrodeproductos";
 
 //conectamos base de datos mongodb a producción
-const MongoUrlProd = process.env.MONGO_URI;
+const mongoUrlProd = process.env.MONGO_URI;
 
 require("dotenv").config();
 
@@ -62,7 +62,7 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
     store: new MongoStore({
-        url:MongoUrlDev,
+        url:mongoUrlDev,
         autoReconnect: true 
     })
 
