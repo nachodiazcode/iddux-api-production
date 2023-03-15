@@ -71,7 +71,7 @@ app.use(session({
 /*process.env.MONGO_URI */ 
 
 mongoose.Promise = global.Promise ;
-mongoose.connect( MongoUrlProd, {
+mongoose.connect( mongoUrlProd, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false // Agregar esta línea para deshabilitar findAndModify
