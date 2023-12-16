@@ -1,26 +1,17 @@
-const app = require('./app')
-const log = require('./utils/logger')
-const config = require('./config/index')
+const app = require('./app.js');
+const express = require('express');
+const log = require('./utils/logger');
+const config = require('./config/index');
 
-const express = requier('express')
-
-const router = express()
-
-var session = require('express-session')
-
-var port = 3000 
-
-//connect db
-const https = require('https');
+const router = express.Router(); // Crear un enrutador
 
 router.get('/', (req, res) => {
-    res.send(`<h1>Corriendo un API en Vercel yeeeeei</h1> 🥳`)
-  })
+  res.send(`<h1>¡Corriendo un API en Vercel yeeeeei! 🥳</h1>`);
+});
 
+const port = config.puerto || 3000; // Usar config.puerto si está definido, de lo contrario, el puerto 3000
 
-async function init() {
-    await app.listen(config.puerto)
-    log.info(`Leasting on port `+port)
-}
-
-init()
+// Iniciar el servidor
+router.listen(port, () => {
+  log.info(`Escuchando en el puerto ${port}`);
+});
