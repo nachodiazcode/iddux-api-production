@@ -1,10 +1,3 @@
 {
-    "version": 2,
-    "routes": [
-      {
-        "src": "/feedback/(?!general)(.*)",
-        "dest": "/api/feedback/general$1",
-        "status": 200
-      }
-    ]
+    "rewrites": [{ "source": "/api/(.*)", "destination": "/api" }]
   }
