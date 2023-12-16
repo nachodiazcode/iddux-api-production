@@ -1,9 +1,10 @@
 {
     "version": 2,
-    "builds": [
-      { "src": "index.js", "use": "@vercel/node" }
-    ],
     "routes": [
-      { "src": "/(.*)", "dest": "/index.js" }
+      {
+        "src": "/feedback/(?!general)(.*)",
+        "dest": "/api/feedback/general$1",
+        "status": 200
+      }
     ]
   }
