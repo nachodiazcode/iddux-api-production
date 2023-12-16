@@ -1,6 +1,12 @@
-/node_module
+/node_modules
 /.idea  
 /scratch
+/.history
+/.vscode
+
+/deployment.sh 
+/vercel.json
+
 
 .env
 package-lock.json
