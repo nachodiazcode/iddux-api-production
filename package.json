@@ -47,8 +47,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "test": "jest",
-    "vercel-build": "echo hello"
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
