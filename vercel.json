@@ -2,8 +2,8 @@
   "version": 2,
   "routes": [
     {
-      "src": "/api/products",
-      "dest": "/index.js" 
+      "src": "/",
+      "dest": "/app.js" 
     }
   ]
 }
