@@ -9,6 +9,11 @@ var port = 4000
 //connect db
 const https = require('https');
 
+app.get('/', (req, res) => {
+    res.send(`<h1>Corriendo un API en Vercel yeeeeei</h1> 🥳`)
+  })
+
+
 async function init() {
     await app.listen(config.puerto)
     log.info(`Leasting on port `+port)
