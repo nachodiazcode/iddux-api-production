@@ -41,11 +41,14 @@
     "spin": "^0.0.1",
     "underscore": "^1.12.0",
     "uuid": "^8.3.1",
+    "vercel": "^32.7.2",
     "web-push": "^3.5.0",
     "winston": "^3.3.3"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test":"jest",
+    "vercel-build": "echo hello"
   },
   "keywords": [],
   "author": "",
