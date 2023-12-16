@@ -2,6 +2,10 @@ const app = require('./app')
 const log = require('./utils/logger')
 const config = require('./config/index')
 
+const express = requier('express')
+
+const router = express()
+
 var session = require('express-session')
 
 var port = 3000 
@@ -9,7 +13,7 @@ var port = 3000
 //connect db
 const https = require('https');
 
-app.get('/', (req, res) => {
+router.get('/', (req, res) => {
     res.send(`<h1>Corriendo un API en Vercel yeeeeei</h1> 🥳`)
   })
 
