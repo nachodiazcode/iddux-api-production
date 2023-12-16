@@ -101,6 +101,10 @@ app.use((req, res, next) => {
 
 app.use('/', express.static('client', {redirect:false}));
 
+app.get('/', (req, res) => {
+    res.send(`<h1>Corriendo un API en Vercel yeeeeei</h1> 🥳`)
+  })
+
 app.use(require('./routes'))
 app.get('*', function(req,res,next){
     res.sendFile(path.resolve('client/index.html'));
