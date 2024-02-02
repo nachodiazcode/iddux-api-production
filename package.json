@@ -41,12 +41,13 @@
     "spin": "^0.0.1",
     "underscore": "^1.12.0",
     "uuid": "^8.3.1",
-    "vercel": "^32.7.2",
+    "vercel": "^32.3.0",
     "web-push": "^3.5.0",
     "winston": "^3.3.3"
   },
   "scripts": {
     "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "jest"
   },
   "keywords": [],
@@ -61,6 +62,7 @@
   },
   "homepage": "https://github.com/nachodiaz/iddyx-backend#readme",
   "devDependencies": {
-    "@types/node": "^18.11.18"
+    "@types/node": "^18.11.18",
+    "jest": "^29.7.0"
   }
 }
